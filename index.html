@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Grupa muzyczna na kazda okazje</title>
+<meta name="description" content="Demonstration of grouping content in pure CSS parallax scrolling website">
+<style>
+
+  /* Parallax base styles
+  --------------------------------------------- */
+
+  .parallax {
+    height: 500px; /* fallback for older browsers */
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-perspective: 300px;
+    perspective: 300px;
+  }
+  
+  table, th, td {
+
+  padding: 5px;
+}
+table {
+  border-spacing: 50px;
+}
+
+  .parallax__group {
+    position: relative;
+    height: 500px; /* fallback for older browsers */
+    height: 100vh;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+  
+  .footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: black;
+   color: white;
+   text-align: left;
+
+}
+.stopka {     
+margin-left: 100px;
+  border-spacing: 30px;
+	  font-size: .600em;
+  font-weight: 400;
+
+
+}
+
+  .parallax__layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .parallax__layer--fore {
+    -webkit-transform: translateZ(90px) scale(.7);
+    transform: translateZ(90px) scale(.7);
+    z-index: 1;
+  }
+
+  .parallax__layer--base {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    z-index: 4;
+  }
+
+  .parallax__layer--back {
+    -webkit-transform: translateZ(-300px) scale(2);
+    transform: translateZ(-300px) scale(2);
+    z-index: 3;
+  }
+
+  .parallax__layer--deep {
+    -webkit-transform: translateZ(-600px) scale(3);
+    transform: translateZ(-600px) scale(3);
+    z-index: 2;
+  }
+
+
+  /* Debugger styles - used to show the effect
+  --------------------------------------------- */
+
+  .debug {
+    position: fixed;
+    top: 0;
+    left: .5em;
+    z-index: 999;
+    background: rgba(0,0,0,.85);
+    color: #fff;
+    padding: .5em;
+    border-radius: 0 0 5px 5px;
+  }
+  .debug-on .parallax__group {
+    -webkit-transform: translate3d(800px, 0, -800px) rotateY(30deg);
+    transform: translate3d(700px, 0, -800px) rotateY(30deg);
+ }
+  .debug-on .parallax__layer {
+    box-shadow: 0 0 0 2px #000;
+    opacity: 0.9;
+  }
+  .parallax__group {
+    -webkit-transition: -webkit-transform 0.5s;
+    transition: transform 0.5s;
+  }
+
+
+  /* demo styles
+  --------------------------------------------- */
+
+  body, html {
+    overflow: hidden;
+  }
+
+  body {
+    font: 50% / 1.5 Arial;
+	  color: white;
+  }
+
+  * {
+    margin:0;
+    padding:0;
+  }
+
+  .parallax {
+    font-size: 200%;
+  }
+
+   /* centre the content in the parallax layers */
+  .title {
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+
+
+  /* style the groups
+  --------------------------------------------- */
+
+  #group1 {
+    z-index: 5; /* slide over group 2 */
+  }
+  #group1 .parallax__layer--base {
+    background: #ff5050;
+  }
+  
+    #group11 {
+    z-index: 5; /* slide over group 2 */
+  }
+  #group11 .parallax__layer--base {
+    background: white;
+
+	  color: #0d0d0d;
+  }
+  
+
+  #group2 {
+    z-index: 3; /* slide under groups 1 and 3 */
+  }
+  #group2 .parallax__layer--back {
+  background-image: url("images/1.jpg");
+  background-size: 100%;
+  }
+  
+   #group22 {
+    z-index: 3; /* slide under groups 1 and 3 */
+  }
+  #group22 .parallax__layer--back {
+  background-image: url("images/2.jpg");
+  background-size: 100%;
+  }
+ 
+   #group222 {
+    z-index: 3; /* slide under groups 1 and 3 */
+  }
+  #group222 .parallax__layer--back {
+  background-image: url("images/3.jpg");
+  background-size: 100%;
+  } 
+  
+
+  #group3 {
+    z-index: 4; /* slide over group 2 and 4 */
+  }
+  #group3 .parallax__layer--base {
+    background: rgb(153,216,101);
+  }
+
+  #group4 {
+    z-index: 2; /* slide under group 3 and 5 */
+  }
+  #group4 .parallax__layer--deep {
+    background: rgb(184,223,101);
+  }
+
+  #group5 {
+    z-index: 3; /* slide over group 4 and 6 */
+  }
+  #group5 .parallax__layer--base {
+    background: rgb(214,229,100);
+  }
+
+  #group6 {
+    z-index: 2; /* slide under group 5 and 7 */
+  }
+  #group6 .parallax__layer--back {
+    background: rgb(245,235,100);
+  }
+
+  #group7 {
+    z-index: 3; /* slide over group 7 */
+  }
+  #group7 .parallax__layer--base {
+    background: rgb(255,241,100);
+  }
+
+
+  /* misc
+  --------------------------------------------- */
+  .demo__info {
+    position: absolute;
+    z-index:100;
+    bottom: 1vh;
+    top: auto;
+    font-size:120%;
+    text-align:left;
+    width: 100%;
+	border-spacing: 50px;
+	margin-left: 60px;
+
+  }
+</style>
+</head>
+
+<body>
+
+  <div class="debug">
+    <label><input type="checkbox"> 3D</label>
+  </div>
+  <div class="demo__info">
+  
+
+
+<a href="https://www.facebook.com/Oprawa-muzyczna-%C5%9Blub%C3%B3w-398449504309779/?eid=ARC9QcyzHAN_6DWhXHYPJeHF1C8r7fGvWdr3yE6z2Wno0eMndxRWkzdUa_CYbwsWd3adN_GCZtrywARu">
+<img src="images/fb.png" width="3%" height="3%"></a>
+  </div>
+
+  <div class="parallax">
+
+    <div id="group1" class="parallax__group">
+      <div class="parallax__layer parallax__layer--base">
+        <div class="title">     <img src="images/logo2.png" width="80%" height="80%"></div>
+      </div>
+    </div>
+ 
+ <div id="group2" class="parallax__group">
+      <div class="parallax__layer parallax__layer--base">
+        <div class="title"><p style="line-height:6">
+		<img src="images/violin.png" width="10%" height="10%"></p>
+		<p style="line-height:1.8">
+Witamy!</p>
+Jesteśmy trójką sympatycznych, wykształconych muzyków 
+(studiujących obecnie na Akademiach Muzycznych), 
+którzy oferują profesjonalną oprawę muzyczną zarówno na ślub, jak i inne okazje! 
+</p>
+		</div>
+      </div>
+      <div class="parallax__layer parallax__layer--back">
+        <div class="title"></div>
+      </div>
+    </div>
+	    <div id="group11" class="parallax__group">
+      <div class="parallax__layer parallax__layer--base">
+        <div class="title">
+
+	
+
+	<img src="images/posluchaj.png" width="80%" ></p>
+
+		  <table style="width:100%">
+  	  <tr>  
+	
+	<td>
+		<p style="line-height:2">
+<iframe width="100%" height="100" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/602449890&color=%23ff5050&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+</p>
+		<p style="line-height:2">
+<iframe width="100%" height="100" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/602449311&color=%23ff5050&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+</p>
+		<p style="line-height:2">
+<iframe width="100%" height="100" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/602009505&color=%23ff5050&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+</p>
+		<p style="line-height:2">
+<iframe width="100%" height="100" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/602478888&color=%23ff5050&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+</p>	
+	</td>
+
+  </tr>
+  </table>
+
+		
+		</div>
+      </div>
+    </div>
+
+ <div id="group22" class="parallax__group">
+      <div class="parallax__layer parallax__layer--base">
+        <div class="title">
+		<p style="line-height:6">
+		<img src="images/piano.png" width="10%" height="10%"></p>
+		<p style="line-height:1.8">
+Nasz zespół składa się z dwojga skrzypaczek oraz organisty. 
+Na potrzeby specjalne możemy również poszerzyć skład o wokalistkę 
+lub wiolonczelę oraz grać w innych konfiguracjach (np. tylko duet skrzypcowy).
+Jeśli chodzi o śluby - preferujemy klasyczny repertuar, ale jesteśmy otwarci na życzenia pary młodej, 
+o ile jesteśmy powiadami o nich wystarczająco wcześnie. Jesteśmy w stanie zagrać również podczas składania życzeń. 
+Działamy na terenie Małopolski. </p>
+Zachęcamy do kontaktu!
+</p>
+		</div>
+      </div>
+      <div class="parallax__layer parallax__layer--back">
+        <div class="title"></div>
+      </div>
+    </div>
+	
+	    <div id="group11" class="parallax__group">
+      <div class="parallax__layer parallax__layer--base">
+        <div class="title">     
+		<img src="images/poznaj.png" width="80%" height="80%"></p>
+		
+			  <table style="width:100%"   >
+		  <tr>
+    <td >
+<center>
+	<img src="images/ola1.png" width="200px" height="200px">
+<p style="line-height:2  ;font-size: 20px" >	
+<b>Ola Kurek</b></p>
+<p style="line-height:1.4  ;font-size: 13px" >
+Studentka wokalistyki estradowej Akademii 
+Muzycznej w Łodzi oraz skrzypaczka
+po II stopniu Szkoły Muzycznej w Tarnowie.
+</p>
+</center>
+</td>
+
+<td>
+<center>
+	<img src="images/ola2.png" width="200px" height="200px">
+<p style="line-height:2  ;font-size: 20px" >	
+<b>Monika Stańczyk</b></p>
+<p style="line-height:1.4  ;font-size: 13px" >
+Studentka jazzu i muzyki estradowej w Katowicach w klasie skrzypiec.
+</p>
+</center>
+</td>
+
+<td>
+<center>
+	<img src="images/ola3.png" width="200px" height="200px">
+<p style="line-height:2  ;font-size: 20px" >	
+<b>Marcin Kucharczyk</b></p>
+<p style="line-height:1.4  ;font-size: 13px" >
+Student wydziału instrumentalnego w Krakowie w klasie organów.
+</p>
+</center>
+</td>
+
+</tr>
+</table>
+		
+		
+		
+		</div>
+      </div>
+    </div>
+	
+	
+	 <div id="group222" class="parallax__group">
+      <div class="parallax__layer parallax__layer--base">
+        <div class="title"><p style="line-height:6">
+		<img src="images/kontakt.png" width="50%" height="50%"></p>
+		<p style="line-height:1.8">
+Skontaktuj się z nami od zaraz!<p>
+
+<b>
+mozeszpocalowacpannemloda@gmail.com</b>
+</p>
+		</div>
+      </div>
+      <div class="parallax__layer parallax__layer--back">
+        <div class="title"></div>
+      </div>
+    </div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+  <script>
+    var debugInput = document.querySelector("input");
+    function updateDebugState() {
+        document.body.classList.toggle('debug-on', debugInput.checked);
+    }
+    debugInput.addEventListener("click", updateDebugState);
+    updateDebugState();
+  </script>
+
+  <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-10812217-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+</body>
+</html>
